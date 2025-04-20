@@ -1,12 +1,16 @@
 from unittest.mock import patch, Mock
 from weather.example import WeatherService, write_temperature
 
-@patch('weather.example.WeatherService.get_temperature')
-def test_write_temperature(mock_get_temp):
-    mock_get_temp.return_value = 16.1
+def test_write_temperature():
     mock_ws = Mock()
+    mock_ws.get_temperature.return_value = 16.1
     assert write_temperature(mock_ws, "Example city") == f"The temperature in Example city is 16.1°C"
 
+@patch("weather.example.WeatherService._fetch_weather")
+def test_get_temperature(mock_fetch):
+    ws = WeatherService()
+    mock_fetch.return_value = {'temperature': 16.1}
+    assert ws.get_temperature(ws) == 16.1
 
 def test_patch_init_too_late():
     service = WeatherService()
