@@ -12,10 +12,10 @@ def test_get_temperature(mock_fetch):
     mock_fetch.return_value = {'temperature': 16.1}
     assert ws.get_temperature(ws) == 16.1
 
-def test_patch_init_too_late():
+def test_patch_too_late():
     service = WeatherService()
-    with patch.object(WeatherService, '__init__', return_value=None):
-        assert service.base_url == "https://api.weather.local"  # Patch has no effect
+    with patch.object(WeatherService, 'choose_base_url', return_value="test-url"):
+        assert service.base_url == "test-url"  # Patch has no effect
 
 @patch("weather.example.WeatherService._parse_temperature", return_value=25)
 def test_modify_mock_after_call(mock_parse):

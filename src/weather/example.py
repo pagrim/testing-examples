@@ -1,8 +1,14 @@
 import requests
 
 class WeatherService:
-    def __init__(self, base_url="https://example.weather.api"):
-        self.base_url = base_url
+    def __init__(self, base_url=None):
+        self.default_url = "https://example.weather.api"
+        self.base_url = self.choose_base_url(base_url)
+
+    def choose_base_url(self, base_url):
+        if base_url is None:
+            return self.default_url
+        return base_url
 
     def get_temperature(self, city):
         raw_data = self._fetch_weather(city)
