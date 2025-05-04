@@ -26,3 +26,7 @@ class WeatherService:
 def write_temperature(service: WeatherService, city):
     temp = service.get_temperature(city)
     return f"The temperature in {city} is {temp}°C"
+
+def write_paris_temperature():
+    ws = WeatherService()
+    return write_temperature(ws, 'Paris')
